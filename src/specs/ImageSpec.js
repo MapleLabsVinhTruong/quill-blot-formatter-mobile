@@ -31,10 +31,10 @@ export default class ImageSpec extends BlotSpec {
 
     this.img = el;
     const customTag = el.dataset.customTag;
-    if (customTag === 'IMAGE') {
-      this.formatter.showImageFormatter(this);
-    } else if (customTag === 'STICKER'){
+    if (customTag === 'STICKER'){
       this.formatter.showStickerFormatter(this);
+    } else {
+      this.formatter.showImageFormatter(this);
     }
   };
 }

@@ -61,7 +61,7 @@ export default class ResizeAction extends Action {
     box.setAttribute('data-position', position)
     box.style.cursor = cursor
     box.innerHTML = `
-      <div style="background-color:white;">
+      <div style="border-radius:50%;background-color:white;">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
       <defs>
       <clipPath id="clip1">
@@ -100,7 +100,7 @@ export default class ResizeAction extends Action {
     box.setAttribute('data-position', position)
     box.style.cursor = cursor
     box.innerHTML = `
-        <div style="background-color:white;">
+      <div style="border-radius:50%;background-color:white;">
         <?xml version="1.0" encoding="UTF-8"?>
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
         <g id="surface1">
