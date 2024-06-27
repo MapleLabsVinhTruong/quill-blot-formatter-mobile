@@ -5,6 +5,7 @@ import Action from '../actions/Action';
 import AlignAction from '../actions/align/AlignAction';
 import ResizeAction from '../actions/ResizeAction';
 import DeleteAction from '../actions/DeleteAction';
+import DragAction from '../actions/DragAction';
 
 export default class BlotSpec {
   formatter: BlotFormatter;
@@ -15,8 +16,12 @@ export default class BlotSpec {
 
   init(): void {}
 
-  getActions(): Class<Action>[] {
+  getImageActions(): Class<Action>[] {
     return [AlignAction, ResizeAction, DeleteAction];
+  }
+
+  getStickerActions(): Class<Action>[] {
+    return [DragAction, ResizeAction, DeleteAction];
   }
 
   getTargetElement(): ?HTMLElement {

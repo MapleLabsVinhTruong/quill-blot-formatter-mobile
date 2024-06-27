@@ -70,7 +70,7 @@ const DefaultOptions: Options = {
     style: {
       position: 'absolute',
       boxSizing: 'border-box',
-      border: '1px dashed #444',
+      border: '1px dashed #535353',
     },
   },
   align: {
@@ -145,7 +145,7 @@ const DefaultOptions: Options = {
       height: '24px',
       width: '24px',
       borderRadius: '50%',
-      backgroundColor: 'white',
+      backgroundColor: 'transparent',
       // border: '1px solid #ccc',
       boxSizing: 'border-box',
       touchAction: 'none',

@@ -167,11 +167,17 @@ export class ResizeAction extends Action {
     topLeftHandle: HTMLElement;
     topRightHandle: HTMLElement;
     bottomRightHandle: HTMLElement;
+    bottomRightIcon: HTMLElement;
     bottomLeftHandle: HTMLElement;
     dragHandle?: HTMLElement;
+    dragOverlay?: HTMLElement;
     dragStartX: number;
     preDragWidth: number;
     targetRatio: number;
+    targetRatio2: number;
+
+    targetX: number;
+    targetY: number;
     onMouseDown: ((event: PointerEvent) => void);
     onDrag: ((event: PointerEvent) => void);
     onMouseUp: (() => void);

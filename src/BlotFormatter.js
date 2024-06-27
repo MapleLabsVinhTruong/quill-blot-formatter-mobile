@@ -37,13 +37,22 @@ export default class BlotFormatter {
     this.specs.forEach(spec => spec.init());
   }
 
-  show(spec: BlotSpec) {
+  showImageFormatter(spec: BlotSpec) {
     this.currentSpec = spec;
     this.currentSpec.setSelection();
     this.setUserSelect('none');
     this.quill.root.parentNode.appendChild(this.overlay);
     this.repositionOverlay();
-    this.createActions(spec);
+    this.createImageActions(spec);
+  }
+
+  showStickerFormatter(spec: BlotSpec) {
+    this.currentSpec = spec;
+    this.currentSpec.setSelection();
+    this.setUserSelect('none');
+    this.quill.root.parentNode.appendChild(this.overlay);
+    this.repositionOverlay();
+    this.createStickerActions(spec);
   }
 
   hide() {
@@ -64,8 +73,16 @@ export default class BlotFormatter {
     this.actions.forEach(action => action.onUpdate());
   }
 
-  createActions(spec: BlotSpec) {
-    this.actions = spec.getActions().map((ActionClass: Class<Action>) => {
+  createImageActions(spec: BlotSpec) {
+    this.actions = spec.getImageActions().map((ActionClass: Class<Action>) => {
+      const action: Action = new ActionClass(this);
+      action.onCreate();
+      return action;
+    });
+  }
+
+  createStickerActions(spec: BlotSpec) {
+    this.actions = spec.getStickerActions().map((ActionClass: Class<Action>) => {
       const action: Action = new ActionClass(this);
       action.onCreate();
       return action;
