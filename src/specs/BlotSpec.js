@@ -16,8 +16,12 @@ export default class BlotSpec {
 
   init(): void {}
 
-  getImageActions(): Class<Action>[] {
-    return [AlignAction, ResizeAction, DeleteAction];
+  getImageStep1Actions(): Class<Action>[] {
+    return [ResizeAction, DeleteAction];
+  }
+
+  getImageStep2Actions(): Class<Action>[] {
+    return [AlignAction, DeleteAction];
   }
 
   getStickerActions(): Class<Action>[] {

@@ -42,27 +42,26 @@ export default class DefaultToolbar implements Toolbar {
   addButtonStyle(button: HTMLElement, index: number, formatter: BlotFormatter) {
     if (formatter.options.align.toolbar.buttonStyle) {
       Object.assign(button.style, formatter.options.align.toolbar.buttonStyle);
-      if (index > 0) {
-        button.style.borderLeftWidth = '0'; // eslint-disable-line no-param-reassign
+      if (index === 0) {
+        button.style.borderTopLeftRadius = '12px';
+        button.style.borderTopRightRadius = '12px';
+      } else if (index === 4){
+        button.style.borderBottomLeftRadius = '12px';
+        button.style.borderBottomRightRadius = '12px';
       }
-    }
-
-    if (formatter.options.align.toolbar.svgStyle) {
-      Object.assign(button.children[0].style, formatter.options.align.toolbar.svgStyle);
     }
   }
 
   addButtons(formatter: BlotFormatter, toolbar: HTMLElement, aligner: Aligner) {
     aligner.getAlignments().forEach((alignment, i) => {
-      const button = document.createElement('span');
+      const button = document.createElement('div');
       button.classList.add(formatter.options.align.toolbar.buttonClassName);
-      button.innerHTML = alignment.icon;
-      button.addEventListener('click', () => {
+      button.innerHTML = alignment.name;
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.onButtonClick(button, formatter, alignment, aligner);
       });
-      this.preselectButton(button, alignment, formatter, aligner);
       this.addButtonStyle(button, i, formatter);
-      this.buttons.push(button);
       toolbar.appendChild(button);
     });
   }
@@ -130,7 +129,7 @@ export default class DefaultToolbar implements Toolbar {
   selectButton(formatter: BlotFormatter, button: HTMLElement) {
     button.classList.add('is-selected');
     if (formatter.options.align.toolbar.addButtonSelectStyle) {
-      button.style.setProperty('filter', 'invert(20%)');
+      // button.style.setProperty('filter', 'invert(20%)');
     }
   }
 

@@ -15,6 +15,7 @@ export default class BlotFormatter {
   specs: BlotSpec[];
   overlay: HTMLElement;
   actions: Action[];
+  isStep2: Boolean;
 
   constructor(quill: any, options: $Shape<Options> = {}) {
     this.quill = quill;
@@ -22,6 +23,7 @@ export default class BlotFormatter {
     this.currentSpec = null;
     this.actions = [];
     this.overlay = document.createElement('div');
+    this.overlay.style.setProperty('z-index', '4')
     this.overlay.classList.add(this.options.overlay.className);
     this.overlay.onkeydown = ev => ev.preventDefault();
     if (this.options.overlay.style) {
@@ -38,12 +40,13 @@ export default class BlotFormatter {
   }
 
   showImageFormatter(spec: BlotSpec) {
+    this.overlay.addEventListener('click',this.onOverlayClick);
     this.currentSpec = spec;
     this.currentSpec.setSelection();
     this.setUserSelect('none');
     this.quill.root.parentNode.appendChild(this.overlay);
     this.repositionOverlay();
-    this.createImageActions(spec);
+    this.createImageStep1Actions(spec);
   }
 
   showStickerFormatter(spec: BlotSpec) {
@@ -59,7 +62,8 @@ export default class BlotFormatter {
     if (!this.currentSpec) {
       return;
     }
-
+    this.isStep2 = false;
+    this.overlay.removeEventListener('click', this.onOverlayClick);
     this.currentSpec.onHide();
     this.currentSpec = null;
     this.quill.root.parentNode.removeChild(this.overlay);
@@ -68,13 +72,31 @@ export default class BlotFormatter {
     this.destroyActions();
   }
 
+  onOverlayClick: () => void = () => {
+    if (this.isStep2 === true){
+      this.hide();
+    } else {
+      this.destroyActions();
+      this.createImageStep2Actions();
+    }
+  }
+
   update() {
     this.repositionOverlay();
     this.actions.forEach(action => action.onUpdate());
   }
 
-  createImageActions(spec: BlotSpec) {
-    this.actions = spec.getImageActions().map((ActionClass: Class<Action>) => {
+  createImageStep1Actions(spec: BlotSpec) {
+    this.actions = spec.getImageStep1Actions().map((ActionClass: Class<Action>) => {
+      const action: Action = new ActionClass(this);
+      action.onCreate();
+      return action;
+    });
+  }
+
+  createImageStep2Actions() {
+    this.isStep2 = true;
+    this.actions = this.currentSpec.getImageStep2Actions().map((ActionClass: Class<Action>) => {
       const action: Action = new ActionClass(this);
       action.onCreate();
       return action;

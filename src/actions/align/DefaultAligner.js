@@ -1,71 +1,93 @@
 // @flow
 
-import { Aligner } from './Aligner';
-import type { Alignment } from './Alignment';
-import type { AlignOptions } from '../../Options';
+import { Aligner } from './Aligner'
+import type { Alignment } from './Alignment'
+import type { AlignOptions } from '../../Options'
 
-const LEFT_ALIGN = 'left';
-const CENTER_ALIGN = 'center';
-const RIGHT_ALIGN = 'right';
+
+const INLINE_WITH_TEXT = 'Inline with text'
+const WRAP_TEXT = 'Wrap text'
+const BREAK_TEXT = 'Break text'
+const BEHIND_TEXT = 'Behind text'
+const IN_FRONT_OF_TEXT = 'In front of text'
 
 export default class DefaultAligner implements Aligner {
-  alignments: { [string]: Alignment };
-  alignAttribute: string;
-  applyStyle: boolean;
+  alignments: { [string]: Alignment }
+  alignAttribute: string
+  applyStyle: boolean
 
-  constructor(options: AlignOptions) {
-    this.applyStyle = options.aligner.applyStyle;
-    this.alignAttribute = options.attribute;
+  constructor (options: AlignOptions) {
+    this.applyStyle = options.aligner.applyStyle
+    this.alignAttribute = options.attribute
     this.alignments = {
-      [LEFT_ALIGN]: {
-        name: LEFT_ALIGN,
-        icon: options.icons.left,
+      [INLINE_WITH_TEXT]: {
+        name: INLINE_WITH_TEXT,
         apply: (el: HTMLElement) => {
-          this.setAlignment(el, LEFT_ALIGN);
-          this.setStyle(el, 'inline', 'left', '0 1em 1em 0');
-        },
+          el.style.position = 'relative'
+          el.style.setProperty('z-index', '0')
+          this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px')
+        }
       },
-      [CENTER_ALIGN]: {
-        name: CENTER_ALIGN,
-        icon: options.icons.center,
+      [WRAP_TEXT]: {
+        name: WRAP_TEXT,
         apply: (el: HTMLElement) => {
-          this.setAlignment(el, CENTER_ALIGN);
-          this.setStyle(el, 'block', null, 'auto');
-        },
+          el.style.position = 'relative'
+          el.style.setProperty('z-index', '0')
+          el.style.setProperty('float', 'left')
+          el.style.setProperty('margin', 'auto')
+        }
       },
-      [RIGHT_ALIGN]: {
-        name: RIGHT_ALIGN,
-        icon: options.icons.right,
+      [BREAK_TEXT]: {
+        name: BREAK_TEXT,
         apply: (el: HTMLElement) => {
-          this.setAlignment(el, RIGHT_ALIGN);
-          this.setStyle(el, 'inline', 'right', '0 0 1em 1em');
-        },
+          el.style.position = 'relative'
+          el.style.setProperty('z-index', '0')
+          this.setStyle(el, 'block', null, 'auto')
+        }
       },
-    };
+      [BEHIND_TEXT]: {
+        name: BEHIND_TEXT,
+        apply: (el: HTMLElement) => {
+          this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px') // reset position
+          el.style.position = 'absolute'
+          el.style.setProperty('float', null)
+          el.style.setProperty('z-index', '-1')
+        }
+      },
+      [IN_FRONT_OF_TEXT]: {
+        name: IN_FRONT_OF_TEXT,
+        apply: (el: HTMLElement) => {
+          this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px') // reset position
+          el.style.position = 'absolute'
+          el.style.setProperty('float', null)
+          el.style.setProperty('z-index', '2')
+        }
+      }
+    }
   }
 
-  getAlignments(): Alignment[] {
-    return Object.keys(this.alignments).map(k => this.alignments[k]);
+  getAlignments (): Alignment[] {
+    return Object.keys(this.alignments).map(k => this.alignments[k])
   }
 
-  clear(el: HTMLElement): void {
-    el.removeAttribute(this.alignAttribute);
-    this.setStyle(el, null, null, null);
+  clear (el: HTMLElement): void {
+    el.removeAttribute(this.alignAttribute)
+    this.setStyle(el, null, null, null)
   }
 
-  isAligned(el: HTMLElement, alignment: Alignment): boolean {
-    return el.getAttribute(this.alignAttribute) === alignment.name;
+  isAligned (el: HTMLElement, alignment: Alignment): boolean {
+    return el.getAttribute(this.alignAttribute) === alignment.name
   }
 
-  setAlignment(el: HTMLElement, value: string) {
-    el.setAttribute(this.alignAttribute, value);
+  setAlignment (el: HTMLElement, value: string) {
+    el.setAttribute(this.alignAttribute, value)
   }
 
-  setStyle(el: HTMLElement, display: ?string, float: ?string, margin: ?string) {
+  setStyle (el: HTMLElement, display: ?string, float: ?string, margin: ?string) {
     if (this.applyStyle) {
-      el.style.setProperty('display', display);
-      el.style.setProperty('float', float);
-      el.style.setProperty('margin', margin);
+      el.style.setProperty('display', display)
+      el.style.setProperty('float', float)
+      el.style.setProperty('margin', margin)
     }
   }
 }
