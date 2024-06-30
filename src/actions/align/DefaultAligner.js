@@ -60,7 +60,7 @@ export default class DefaultAligner implements Aligner {
           this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px') // reset position
           el.style.position = 'absolute'
           el.style.setProperty('float', null)
-          el.style.setProperty('z-index', '2')
+          el.style.setProperty('z-index', '1')
         }
       }
     }

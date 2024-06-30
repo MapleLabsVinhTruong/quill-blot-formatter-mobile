@@ -22,8 +22,7 @@ export default class BlotFormatter {
     this.options = deepmerge(DefaultOptions, options, { arrayMerge: dontMerge });
     this.currentSpec = null;
     this.actions = [];
-    this.overlay = document.createElement('div');
-    this.overlay.style.setProperty('z-index', '4')
+    this.overlay = document.createElement('div');    
     this.overlay.classList.add(this.options.overlay.className);
     this.overlay.onkeydown = ev => ev.preventDefault();
     if (this.options.overlay.style) {
@@ -40,6 +39,7 @@ export default class BlotFormatter {
   }
 
   showImageFormatter(spec: BlotSpec) {
+    this.overlay.style.setProperty('z-index', '2')
     this.overlay.addEventListener('click',this.onOverlayClick);
     this.currentSpec = spec;
     this.currentSpec.setSelection();
@@ -50,6 +50,7 @@ export default class BlotFormatter {
   }
 
   showStickerFormatter(spec: BlotSpec) {
+    this.overlay.style.setProperty('z-index', '21')
     this.currentSpec = spec;
     this.currentSpec.setSelection();
     this.setUserSelect('none');
