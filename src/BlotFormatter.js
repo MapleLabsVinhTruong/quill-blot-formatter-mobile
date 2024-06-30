@@ -16,6 +16,7 @@ export default class BlotFormatter {
   overlay: HTMLElement;
   actions: Action[];
   isStep2: Boolean;
+  type: String;
 
   constructor(quill: any, options: $Shape<Options> = {}) {
     this.quill = quill;
@@ -39,7 +40,8 @@ export default class BlotFormatter {
   }
 
   showImageFormatter(spec: BlotSpec) {
-    this.overlay.style.setProperty('z-index', '2')
+    this.type='IMAGE';
+    this.overlay.style.setProperty('z-index', '3')
     this.overlay.addEventListener('click',this.onOverlayClick);
     this.currentSpec = spec;
     this.currentSpec.setSelection();
@@ -50,7 +52,8 @@ export default class BlotFormatter {
   }
 
   showStickerFormatter(spec: BlotSpec) {
-    this.overlay.style.setProperty('z-index', '21')
+    this.type='STICKER';
+    this.overlay.style.setProperty('z-index', '22')
     this.currentSpec = spec;
     this.currentSpec.setSelection();
     this.setUserSelect('none');
@@ -62,6 +65,10 @@ export default class BlotFormatter {
   hide() {
     if (!this.currentSpec) {
       return;
+    }
+    // const customTag = this.currentSpec.img.dataset.customTag;
+    if (this.type === 'STICKER'){
+      this.currentSpec.img.style.setProperty('z-index', '20')
     }
     this.isStep2 = false;
     this.overlay.removeEventListener('click', this.onOverlayClick);

@@ -32,6 +32,7 @@ export default class ImageSpec extends BlotSpec {
     this.img = el;
     const customTag = el.dataset.customTag;
     if (customTag === 'STICKER'){
+      this.img.style.setProperty('z-index', '21')
       this.formatter.showStickerFormatter(this);
     } else {
       this.formatter.showImageFormatter(this);
