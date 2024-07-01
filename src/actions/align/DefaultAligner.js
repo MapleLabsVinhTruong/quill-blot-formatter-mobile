@@ -8,7 +8,6 @@ import type { AlignOptions } from '../../Options'
 const INLINE_WITH_TEXT = 'Inline with text'
 const WRAP_TEXT = 'Wrap text'
 const BREAK_TEXT = 'Break text'
-const BEHIND_TEXT = 'Behind text'
 const IN_FRONT_OF_TEXT = 'In front of text'
 
 export default class DefaultAligner implements Aligner {
@@ -25,6 +24,8 @@ export default class DefaultAligner implements Aligner {
         apply: (el: HTMLElement) => {
           el.style.position = 'relative'
           el.style.setProperty('z-index', '0')
+          el.style.setProperty('left', '0')
+          el.style.setProperty('top', '0')
           this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px')
         }
       },
@@ -33,6 +34,8 @@ export default class DefaultAligner implements Aligner {
         apply: (el: HTMLElement) => {
           el.style.position = 'relative'
           el.style.setProperty('z-index', '0')
+          el.style.setProperty('left', '0')
+          el.style.setProperty('top', '0')
           el.style.setProperty('float', 'left')
           el.style.setProperty('margin', 'auto')
         }
@@ -42,16 +45,9 @@ export default class DefaultAligner implements Aligner {
         apply: (el: HTMLElement) => {
           el.style.position = 'relative'
           el.style.setProperty('z-index', '0')
+          el.style.setProperty('left', '0')
+          el.style.setProperty('top', '0')
           this.setStyle(el, 'block', null, 'auto')
-        }
-      },
-      [BEHIND_TEXT]: {
-        name: BEHIND_TEXT,
-        apply: (el: HTMLElement) => {
-          this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px') // reset position
-          el.style.position = 'absolute'
-          el.style.setProperty('float', null)
-          el.style.setProperty('z-index', '-1')
         }
       },
       [IN_FRONT_OF_TEXT]: {
