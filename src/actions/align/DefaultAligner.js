@@ -24,8 +24,8 @@ export default class DefaultAligner implements Aligner {
         apply: (el: HTMLElement) => {
           el.style.position = 'relative'
           el.style.setProperty('z-index', '0')
-          el.style.setProperty('left', '0')
-          el.style.setProperty('top', '0')
+          el.style.setProperty('left', '')
+          el.style.setProperty('top', '')
           this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px')
         }
       },
@@ -34,10 +34,11 @@ export default class DefaultAligner implements Aligner {
         apply: (el: HTMLElement) => {
           el.style.position = 'relative'
           el.style.setProperty('z-index', '0')
-          el.style.setProperty('left', '0')
-          el.style.setProperty('top', '0')
+          el.style.setProperty('left', '')
+          el.style.setProperty('top', '')
           el.style.setProperty('float', 'left')
           el.style.setProperty('margin', 'auto')
+          el.style.setProperty('display', 'inline')
         }
       },
       [BREAK_TEXT]: {
@@ -45,8 +46,8 @@ export default class DefaultAligner implements Aligner {
         apply: (el: HTMLElement) => {
           el.style.position = 'relative'
           el.style.setProperty('z-index', '0')
-          el.style.setProperty('left', '0')
-          el.style.setProperty('top', '0')
+          el.style.setProperty('left', '')
+          el.style.setProperty('top', '')
           this.setStyle(el, 'block', null, 'auto')
         }
       },
