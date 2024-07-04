@@ -26,7 +26,7 @@ export default class DefaultAligner implements Aligner {
           el.style.setProperty('z-index', '0')
           el.style.setProperty('left', '')
           el.style.setProperty('top', '')
-          this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px')
+          this.setStyle(el, 'inline-block', null, '0px 6px 0px 6px')
         }
       },
       [WRAP_TEXT]: {
@@ -54,7 +54,7 @@ export default class DefaultAligner implements Aligner {
       [IN_FRONT_OF_TEXT]: {
         name: IN_FRONT_OF_TEXT,
         apply: (el: HTMLElement) => {
-          this.setStyle(el, 'inline-block', null, '5px 5px 5px 5px') // reset position
+          this.setStyle(el, 'inline-block', null, '0px 6px 0px 6px') // reset position
           el.style.position = 'absolute'
           el.style.setProperty('float', null)
           el.style.setProperty('z-index', '1')
