@@ -125,9 +125,9 @@ const DefaultOptions: Options = {
       addButtonSelectStyle: true,
       buttonStyle: {
         padding : '12px',
-        backgroundColor: '#2e2e2e',
-        color: '#B8B8B8',
-        borderBottom: '1px solid #000',
+        backgroundColor: '#EDEDED',
+        color: '#272A2E',
+        borderBottom: '1px solid white',
         verticalAlign: 'middle',
       },
       svgStyle: {
