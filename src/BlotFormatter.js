@@ -7,6 +7,7 @@ import Action from './actions/Action'
 import BlotSpec from './specs/BlotSpec'
 
 const dontMerge = (destination: Array<any>, source: Array<any>) => source
+const longClickDuration = 600
 
 export default class BlotFormatter {
   quill: any
@@ -15,9 +16,11 @@ export default class BlotFormatter {
   specs: BlotSpec[]
   overlay: HTMLElement
   actions: Action[]
-  isStep2: Boolean
   type: String
   selectedIndexAlignment: Number
+
+  timer = null
+  longClickInProgress = false
 
   constructor (quill: any, options: $Shape<Options> = {}) {
     this.quill = quill
@@ -43,7 +46,21 @@ export default class BlotFormatter {
     this.specs.forEach(spec => spec.init())
   }
 
-  showImageFormatter (spec: BlotSpec) {
+  onImageClick (spec: BlotSpec) {
+    this.type = 'IMAGE'
+    this.overlay.style.setProperty('z-index', '3')
+    this.overlay.addEventListener('click', this.onOverlayClick)
+    this.overlay.addEventListener('pointerdown', this.onOverlayMouseDown)
+    this.overlay.addEventListener('pointerleave', this.onOverlayMouseLeave)
+    this.currentSpec = spec
+    this.currentSpec.setSelection()
+    this.setUserSelect('none')
+    this.quill.root.parentNode.appendChild(this.overlay)
+    this.repositionOverlay()
+    this.createImageClickActions(spec)
+  }
+
+  onImageLongClick (spec: BlotSpec) {
     this.type = 'IMAGE'
     this.overlay.style.setProperty('z-index', '3')
     this.overlay.addEventListener('click', this.onOverlayClick)
@@ -52,10 +69,10 @@ export default class BlotFormatter {
     this.setUserSelect('none')
     this.quill.root.parentNode.appendChild(this.overlay)
     this.repositionOverlay()
-    this.createImageStep1Actions(spec)
+    this.createImageLongClickActions(spec)
   }
 
-  showStickerFormatter (spec: BlotSpec) {
+  onStickerClick (spec: BlotSpec) {
     this.type = 'STICKER'
     this.overlay.style.setProperty('z-index', '22')
     this.currentSpec = spec
@@ -74,8 +91,10 @@ export default class BlotFormatter {
     if (this.type === 'STICKER') {
       this.currentSpec.img.style.setProperty('z-index', '20')
     }
-    this.isStep2 = false
     this.overlay.removeEventListener('click', this.onOverlayClick)
+    this.overlay.removeEventListener('pointerdown', this.onOverlayMouseDown)
+    this.overlay.removeEventListener('pointerleave', this.onOverlayMouseLeave)
+
     this.currentSpec.onHide()
     this.currentSpec = null
     this.quill.root.parentNode.removeChild(this.overlay)
@@ -85,18 +104,44 @@ export default class BlotFormatter {
   }
 
   onOverlayClick: () => void = () => {
-    if (this.isStep2 === true) {
-      this.hide()
-    } else {
-      this.destroyActions()
-      this.createImageStep2Actions()
+    console.log('onOverlayClick')
+    clearTimeout(this.timer)
+    if (this.longClickInProgress) {
+      this.longClickInProgress = false
+      return
+    }
+    this.hide()
+    // if (this.isStep2 === true) {
+    //   this.hide()
+    // } else {
+    //   this.destroyActions()
+    //   this.createImageStep2Actions()
+    // }
+  }
+
+  onOverlayMouseDown: () => void = () => {
+    this.timer = setTimeout(() => {
+      this.longClickInProgress = true
+      this.onOverlayLongClick(event)
+    }, longClickDuration)
+  }
+
+  onOverlayMouseLeave: () => void = () => {
+    clearTimeout(this.timer)
+    if (this.longClickInProgress) {
+      this.longClickInProgress = false
     }
   }
 
+  onOverlayLongClick: () => void = () => {
+      this.destroyActions()
+      this.createImageLongClickActions()
+  }
+
+  
+
   onAlignmentSelected: () => void = () => {
-    this.isStep2 = false
-    this.destroyActions()
-    this.createImageStep1Actions(this.currentSpec)
+    this.hide()
   }
 
   update () {
@@ -104,14 +149,15 @@ export default class BlotFormatter {
     this.actions.forEach(action => action.onUpdate())
   }
 
-  createImageStep1Actions (spec: BlotSpec) {
+  createImageClickActions (spec: BlotSpec) {
+    console.log('createImageClickActions')
     const target = this.currentSpec.getTargetElement()
     if (!target) {
       return
     }
     if (target.style.position === 'absolute'){
       this.actions = spec
-      .getDragableImageStep1Actions()
+      .getDragableImageClickActions()
       .map((ActionClass: Class<Action>) => {
         const action: Action = new ActionClass(this)
         action.onCreate()
@@ -119,7 +165,7 @@ export default class BlotFormatter {
       })
     } else {
       this.actions = spec
-      .getImageStep1Actions()
+      .getImageClickActions()
       .map((ActionClass: Class<Action>) => {
         const action: Action = new ActionClass(this)
         action.onCreate()
@@ -128,7 +174,7 @@ export default class BlotFormatter {
     }
   }
 
-  createImageStep2Actions () {
+  createImageLongClickActions () {
     const target = this.currentSpec.getTargetElement()
     if (!target) {
       return
@@ -142,10 +188,9 @@ export default class BlotFormatter {
     } else {
       this.selectedIndexAlignment = 0;
     }
-    this.isStep2 = true
     if (this.selectedIndexAlignment === 3){
       this.actions = this.currentSpec
-      .getDragableImageStep2Actions()
+      .getDragableImageLongClickActions()
       .map((ActionClass: Class<Action>) => {
         const action: Action = new ActionClass(this)
         action.onCreate()
@@ -153,7 +198,7 @@ export default class BlotFormatter {
       })
     } else {
       this.actions = this.currentSpec
-      .getImageStep2Actions()
+      .getImageLongClickActions()
       .map((ActionClass: Class<Action>) => {
         const action: Action = new ActionClass(this)
         action.onCreate()

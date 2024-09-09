@@ -8,8 +8,6 @@ import BlotFormatter from '../../BlotFormatter'
 export default class DefaultToolbar implements Toolbar {
   toolbar: ?HTMLElement
   buttons: HTMLElement[]
-  // originalLeft: Number
-  // originalTop: Number
 
   constructor () {
     this.toolbar = null
@@ -17,13 +15,6 @@ export default class DefaultToolbar implements Toolbar {
   }
 
   create (formatter: BlotFormatter, aligner: Aligner): HTMLElement {
-    // const target = formatter.currentSpec.getTargetElement()
-    // if (target) {
-      // this.originalLeft = target.style.left
-      // this.originalTop = target.style.top
-      // console.log(`create ${this.originalLeft} - ${this.originalTop}`)
-    // }
-
     const toolbar = document.createElement('div')
     toolbar.classList.add(formatter.options.align.toolbar.mainClassName)
     this.addToolbarStyle(formatter, toolbar)
@@ -67,16 +58,17 @@ export default class DefaultToolbar implements Toolbar {
       button.classList.add(formatter.options.align.toolbar.buttonClassName)
       button.innerHTML = alignment.name
       button.addEventListener('click', e => {
-        formatter.selectedIndexAlignment = i;
+        formatter.selectedIndexAlignment = i
         e.stopPropagation()
         this.onButtonClick(button, formatter, alignment, aligner, i)
-        formatter.onAlignmentSelected();
+        formatter.onAlignmentSelected()
       })
       this.addButtonStyle(button, i, formatter)
       toolbar.appendChild(button)
-      if (formatter.selectedIndexAlignment === i){
+      if (formatter.selectedIndexAlignment === i) {
         this.selectButton(formatter, button)
       }
+      this.buttons.push(button)
     })
   }
 
@@ -105,7 +97,7 @@ export default class DefaultToolbar implements Toolbar {
     formatter: BlotFormatter,
     alignment: Alignment,
     aligner: Aligner,
-    index: Number,
+    index: Number
   ) {
     if (!formatter.currentSpec) {
       return
@@ -125,9 +117,11 @@ export default class DefaultToolbar implements Toolbar {
     formatter: BlotFormatter,
     alignment: Alignment,
     aligner: Aligner,
-    index: Number,
+    index: Number
   ) {
+    console.log('=======================clickButton')
     this.buttons.forEach(b => {
+      console.log(`this.buttons ${this.buttons}`)
       this.deselectButton(formatter, b)
     })
     if (aligner.isAligned(alignTarget, alignment)) {
@@ -138,12 +132,6 @@ export default class DefaultToolbar implements Toolbar {
       }
     } else {
       this.selectButton(formatter, button)
-      // if (index === 3){
-      //   alignTarget.style.setProperty('left', `${this.originalLeft}`)
-      //   alignTarget.style.setProperty('top', `${this.originalTop}`)
-      // console.log(`select ${this.originalLeft} - ${this.originalTop}`)
-
-      // }
       alignment.apply(alignTarget)
     }
 
@@ -153,7 +141,7 @@ export default class DefaultToolbar implements Toolbar {
   selectButton (formatter: BlotFormatter, button: HTMLElement) {
     button.classList.add('is-selected')
     if (formatter.options.align.toolbar.addButtonSelectStyle) {
-      button.style.setProperty('filter', 'invert(20%)');
+      button.style.setProperty('filter', 'invert(20%)')
     }
   }
 
