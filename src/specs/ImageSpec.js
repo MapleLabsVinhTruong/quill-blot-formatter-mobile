@@ -71,8 +71,6 @@ export default class ImageSpec extends BlotSpec {
       this.img.style.setProperty('z-index', '21')
       this.formatter.onStickerClick(this)
     } else {
-      console.log('onImageClick()')
-
       this.formatter.onImageClick(this)
     }
   }

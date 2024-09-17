@@ -1,77 +1,161 @@
 <html>
-<head>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.js"></script>
-  <script type="text/javascript" src="dist/quill-blot-formatter.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.snow.min.css">
-  <style>
-    html {
-      height: 100%;
-    }
-
-    body {
-      margin: 0;
-      height: 100%;
-    }
-
-    #scrolling-container {
-      height: 100%;
-      min-height: 100%;
-      overflow-y: auto;
-    }
-
-    #quill-container {
-      height: auto;
-      min-height: 100%;
-      padding: 20px;
-      /* background-color: black; */
-      color: #B8B8B8;
-    }
-
-    #quill-container .ql-editor {
-      overflow-y: visible;
-      height: auto;
-    }
-  </style>
-</head>
-<body>
-
-  <div>
-    <div style="background-color:black;position:absolute;z-index: -99;width: 100%;height: 100%;word-wrap: break-word;"></div>
-    <button onclick="insertImage()">Insert Image</button>
-    <button onclick="insertSticker()">Insert Sticker</button>
-  <div id="quill-container">
-        <p>Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image... Hi! Here is an image...</p>
-
-    <!-- <p><img src="https://kittenrescue.org/wp-content/uploads/2017/03/KittenRescue_KittenCareHandbook.jpg" height="100" width="120"/></p> -->
-  </div>
-</div>
-
-
-<script>
-  Quill.register({
-    'modules/blotFormatter': QuillBlotFormatter.default,
-  })
-  const quill = new Quill('#quill-container', {
-    theme: 'snow',
-    // scrollingContainer: '#scrolling-container',
-    modules: {
-      toolbar: false,
-      blotFormatter: {
-      }
-    }
-  });
-  function insertImage() {
-      const selection = quill.getSelection();
-      if (selection !== null){
-        quill.insertEmbed(selection.index, 'image', 'https://cdn-icons-png.flaticon.com/128/6913/6913502.png', 'api');
+  <head>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="dist/quill-blot-formatter.min.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/quill/2.0.2/quill.snow.min.css"
+    />
+    <style>
+      html {
+        height: 100%;
       }
 
-  }
+      body {
+        margin: 0;
+        height: 100%;
+      }
 
-  function insertSticker() {
-    quill.insertEmbed(0, 'sticker', 'https://mms.img.susercontent.com/a074843da3cac527ea438d73bd91ec74_tn', 'api');
-  }
-</script>
+      #scrolling-container {
+        height: 100%;
+        min-height: 100%;
+        overflow-y: auto;
+      }
 
-</body>
+      #quill-container {
+        height: auto;
+        min-height: 100%;
+        padding: 20px;
+        /* background-color: black; */
+        color: #b8b8b8;
+      }
+
+      #quill-container .ql-editor {
+        overflow-y: visible;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div
+        style="
+          background-color: black;
+          position: absolute;
+          z-index: -99;
+          width: 100%;
+          height: 100%;
+          word-wrap: break-word;
+        "
+      ></div>
+      <button onclick="insertImage()">Insert Image</button>
+      <button onclick="insertSticker()">Insert Sticker</button>
+      <div id="quill-container">
+        <p>
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+          Hi! Here is an image... Hi! Here is an image... Hi! Here is an
+          image... Hi! Here is an image... Hi! Here is an image... Hi! Here is
+          an image... Hi! Here is an image... Hi! Here is an image... Hi! Here
+          is an image... Hi! Here is an image... Hi! Here is an image... Hi!
+          Here is an image... Hi! Here is an image... Hi! Here is an image...
+        </p>
+
+        <!-- <p><img src="https://kittenrescue.org/wp-content/uploads/2017/03/KittenRescue_KittenCareHandbook.jpg" height="100" width="120"/></p> -->
+      </div>
+    </div>
+
+    <script>
+      Quill.register({
+        'modules/blotFormatter': QuillBlotFormatter.default
+      })
+      const quill = new Quill('#quill-container', {
+        theme: 'snow',
+        // scrollingContainer: '#scrolling-container',
+        modules: {
+          toolbar: false,
+          blotFormatter: {}
+        }
+      })
+      function insertImage() {
+        const selection = quill.getSelection()
+        if (selection !== null) {
+          quill.insertEmbed(
+            selection.index,
+            'image',
+            'https://cdn-icons-png.flaticon.com/128/6913/6913502.png',
+            'api'
+          )
+        }
+      }
+
+      function insertSticker() {
+        quill.insertEmbed(
+          0,
+          'sticker',
+          'https://mms.img.susercontent.com/a074843da3cac527ea438d73bd91ec74_tn',
+          'api'
+        )
+      }
+    </script>
+  </body>
 </html>

@@ -9,6 +9,8 @@ export default class DragAction extends Action {
   dragStartY: number
   targetX: number
   targetY: number
+  differenceTop: number
+  differenceLeft: number
 
   constructor (formatter: BlotFormatter) {
     super(formatter)
@@ -17,6 +19,8 @@ export default class DragAction extends Action {
     this.dragStartY = 0
     this.targetX = 0
     this.targetY = 0
+    this.differenceTop = 0
+    this.differenceLeft = 0
   }
 
   onCreate () {
@@ -76,8 +80,10 @@ export default class DragAction extends Action {
     const rect = target.getBoundingClientRect()
     this.dragStartX = event.clientX
     this.dragStartY = event.clientY
-    this.targetX = rect.left + window.scrollX
-    this.targetY = rect.top + window.scrollY
+    this.targetX = rect.left 
+    this.targetY = rect.top 
+    this.differenceTop = rect.top - target.offsetTop
+    this.differenceLeft = rect.left - target.offsetLeft
     document.addEventListener('pointermove', this.onDrag)
     document.addEventListener('pointerup', this.onMouseUp)
   }
@@ -94,9 +100,8 @@ export default class DragAction extends Action {
 
     const deltaX = event.clientX - this.dragStartX
     const deltaY = event.clientY - this.dragStartY
-    // target.style.position = 'absolute'
-    target.style.left = `${this.targetX + deltaX}`
-    target.style.top = `${this.targetY + deltaY}`
+    target.style.left = `${this.targetX + deltaX - this.differenceLeft}px`
+    target.style.top = `${this.targetY + deltaY - this.differenceTop}px`
     this.formatter.update()
   }
 

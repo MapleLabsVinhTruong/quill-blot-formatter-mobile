@@ -119,9 +119,7 @@ export default class DefaultToolbar implements Toolbar {
     aligner: Aligner,
     index: Number
   ) {
-    console.log('=======================clickButton')
     this.buttons.forEach(b => {
-      console.log(`this.buttons ${this.buttons}`)
       this.deselectButton(formatter, b)
     })
     if (aligner.isAligned(alignTarget, alignment)) {

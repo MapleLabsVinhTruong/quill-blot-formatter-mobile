@@ -104,7 +104,6 @@ export default class BlotFormatter {
   }
 
   onOverlayClick: () => void = () => {
-    console.log('onOverlayClick')
     clearTimeout(this.timer)
     if (this.longClickInProgress) {
       this.longClickInProgress = false
@@ -150,7 +149,6 @@ export default class BlotFormatter {
   }
 
   createImageClickActions (spec: BlotSpec) {
-    console.log('createImageClickActions')
     const target = this.currentSpec.getTargetElement()
     if (!target) {
       return
