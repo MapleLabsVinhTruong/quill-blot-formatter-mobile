@@ -37,7 +37,7 @@ export default class DefaultAligner implements Aligner {
           el.style.setProperty('left', '')
           el.style.setProperty('top', '')
           el.style.setProperty('float', 'left')
-          el.style.setProperty('margin', 'auto')
+          el.style.setProperty('margin', 'auto 16px auto auto')
           el.style.setProperty('display', 'inline')
         }
       },
